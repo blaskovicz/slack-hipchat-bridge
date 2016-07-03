@@ -35,9 +35,12 @@ def env_load!(var, default = nil)
   end
   value
 end
+def global_logger_level
+  env_load!('LOG_DEBUG', 'false') == 'true' ? Logger::DEBUG : Logger::INFO
+end
 def global_logger
   logger = ::Logger.new(STDOUT)
-  logger.level = env_load!('LOG_DEBUG', 'false') == 'true' ? Logger::DEBUG : Logger::INFO
+  logger.level = global_logger_level
   logger
 end
 
