@@ -126,6 +126,7 @@ DEPENDENCIES
   foreman
   hipbot
   hipchat
+  httparty
   sinatra
   slack-ruby-bot
   slack-ruby-client
