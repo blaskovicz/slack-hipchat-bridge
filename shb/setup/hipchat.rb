@@ -6,7 +6,6 @@ class ToSlackBot < Hipbot::Bot
   configure do |c|
     c.jid = env_load! 'HIPCHAT_JID'
     c.password = env_load! 'HIPCHAT_PASSWORD'
-    c.join = "hubot-testing"
     c.logger = global_logger
   end
   on global: true do
