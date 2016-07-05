@@ -2,7 +2,7 @@
 require 'httparty'
 class KeepAlive
   def self.start
-    every = env_load! 'PING_EVERY_SECONDS', '30'
+    every = env_load!('PING_EVERY_SECONDS', '30').to_i
     url = env_load! 'HEROKU_URL'
     global_logger.info "Starting keep alive checks against #{url} every #{every} sec"
     checker = self.new(url)
@@ -15,17 +15,11 @@ class KeepAlive
       Kernel.sleep every
     end
   end
-  private
   def initialize(to_check)
     @to_check = to_check
   end
   def check
-    r = HTTParty.get @to_check
-    if r.is_success?
-      true
-    else
-      false
-    end
+    HTTParty.get(@to_check).success?
   end
 end
 
