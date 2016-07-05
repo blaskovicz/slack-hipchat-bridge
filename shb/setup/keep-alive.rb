@@ -1,6 +1,7 @@
 #! ruby
 require 'httparty'
 class KeepAlive
+  attr_accessor :to_check
   def self.start
     every = env_load!('PING_EVERY_SECONDS', '30').to_i
     url = env_load! 'HEROKU_URL'
@@ -8,9 +9,9 @@ class KeepAlive
     checker = self.new(url)
     loop do
       if checker.check
-        global_logger.info "[keep-alive] check on #{@to_check} success!"
+        global_logger.info "[keep-alive] check on #{checker.to_check} success!"
       else
-        global_logger.info "[keep-alive] check on #{@to_check} failed: #{r.inspect}"
+        global_logger.warn "[keep-alive] check on #{checker.to_check} failed."
       end
       Kernel.sleep every
     end
